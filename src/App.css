@@ -9,12 +9,12 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    animation: App-logo-spin infinite 3s cubic-bezier(0.48, 0.19, 0.51, 0.85);
   }
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #202632;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,6 +22,8 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 40px;
+  box-sizing: border-box;
 }
 
 .App-link {
@@ -35,4 +37,62 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+/* project styles */
+html {background-color: #202632;}
+.card {
+  background-color: #313b49;
+  width: 75vw;
+  border-radius: 8px;
+  padding: 36px 36px 60px;
+  max-width: 500px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  color: #56e09d;
+  text-transform: uppercase;
+  letter-spacing: 0.45em;
+  font-size: 0.65em;
+  font-weight: 700;
+}
+
+label em {
+  font-style: normal;
+  &:before {
+    content: '#';
+  }
+}
+
+.advice-paragraph {
+  font-size:  calc(10px + 3vmin);
+  font-weight: 700;
+
+  &:before, &:after {
+    content: '“';
+    font-family: 'Montagu Slab', serif;
+    letter-spacing: 4px;
+  }
+  &:after {
+    content:'"';
+  }
+}
+
+button.dice-button {
+  padding: 20px;
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  margin-left: -32px;
+  appearance: none;
+  outline: 0;
+  border: 0;
+  background-color: #5dfeae;
+  border-radius: 64px;
+  display: flex;
+  cursor: pointer;
 }
