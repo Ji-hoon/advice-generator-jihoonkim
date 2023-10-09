@@ -1,6 +1,4 @@
-.App {
-  text-align: center;
-}
+
 
 .App-logo {
   height: 40vmin;
@@ -13,7 +11,8 @@
   }
 }
 
-.App-header {
+.App {
+  text-align: center;
   background-color: #202632;
   min-height: 100vh;
   display: flex;
@@ -41,23 +40,39 @@
 
 
 /* project styles */
+
+.attribution {
+  font-size: calc(10px + 1vmin); 
+  text-align: center; 
+  margin-top: 80px; 
+}
+.attribution a { 
+  color: #56e09d; 
+  text-decoration: none; 
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 html {background-color: #202632;}
+
 .card {
   background-color: #313b49;
   width: 75vw;
   border-radius: 8px;
-  padding: 36px 36px 60px;
+  padding: 36px 36px 72px;
   max-width: 500px;
   position: relative;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 1px 15px 0px rgba(0,0,0,0.35);
 }
 
 label {
   color: #56e09d;
   text-transform: uppercase;
-  letter-spacing: 0.45em;
-  font-size: 0.65em;
+  letter-spacing: 0.4em;
+  font-size: 0.6em;
   font-weight: 700;
 }
 
@@ -71,6 +86,7 @@ label em {
 .advice-paragraph {
   font-size:  calc(10px + 3vmin);
   font-weight: 700;
+  margin: 1em auto 1.5em;
 
   &:before, &:after {
     content: '“';
@@ -95,4 +111,29 @@ button.dice-button {
   border-radius: 64px;
   display: flex;
   cursor: pointer;
+  transition: box-shadow 200ms ease-out;
+
+  &:not(.processing):hover {
+    box-shadow: 0 0 15px 1px #51bb86;
+  }
+  &:not(.processing):active {
+    transform: translateY(2px);
+  }
+  &.processing {
+    background-color: #51bb86;
+    cursor: not-allowed;
+  }
+}
+
+button.dice-button.processing img {
+    animation: rolling-dice infinite 1s cubic-bezier(0.48, 0.19, 0.51, 0.85);
+}
+
+@keyframes rolling-dice {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
