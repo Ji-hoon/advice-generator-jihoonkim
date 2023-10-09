@@ -33,6 +33,12 @@ export function getFetchData() {
   const diceButton = document.querySelector('button.dice-button');
   diceButton.classList.add('processing');
 
+  const idElement = document.querySelector('label em');
+  const paragraphElement = document.querySelector('.advice-paragraph');
+  idElement.textContent = "...";
+  paragraphElement.classList.add('processing');
+  paragraphElement.textContent = "Hearing from wise...";
+
   fetch(API_URL).then( response => response.json())
     .then( data => {
       res = data.slip
@@ -40,7 +46,7 @@ export function getFetchData() {
       //console.log(res);
       setTimeout( () => {
         return generateAdvice(res)
-      }, 2000)
+      }, 2500)
     })
 }
 
@@ -50,6 +56,7 @@ export function generateAdvice(res) {
 
   const idElement = document.querySelector('label em');
   const paragraphElement = document.querySelector('.advice-paragraph');
+  paragraphElement.classList.remove('processing');
 
   idElement.innerHTML = res.id;
   paragraphElement.innerHTML = res.advice;
