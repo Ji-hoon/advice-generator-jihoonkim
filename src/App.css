@@ -78,7 +78,8 @@ label {
 
 label em {
   font-style: normal;
-  &:before {
+
+  &[id]:before {
     content: '#';
   }
 }

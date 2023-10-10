@@ -19,9 +19,11 @@ class Card extends React.Component {
         this.paragraphElement = document.querySelector('.advice-paragraph');
 
         this.diceButton.classList.add('processing');
-        this.idElement.textContent = "...";
+        this.idElement.removeAttribute('id');
+        this.idElement.textContent = '';
         this.paragraphElement.classList.add('processing');
-        this.paragraphElement.textContent = "Hearing from anonymous wise... 👂🏻";
+        this.paragraphElement.textContent = '';
+        this.paragraphElement.innerHTML = `<span>Listening to<br>anonymous advice...</span>`;
         
         fetch(this.API_URL)
           .then( response => response.json())
@@ -37,7 +39,8 @@ class Card extends React.Component {
         this.diceButton.classList.remove('processing');
         this.paragraphElement.classList.remove('processing');
       
-        this.idElement.innerHTML = res.id;
+        this.idElement.setAttribute('id', res.id);
+        this.idElement.textContent = res.id;
         this.paragraphElement.innerHTML = res.advice;
     }
 
@@ -45,7 +48,7 @@ class Card extends React.Component {
         return (
             <div className="App">
                 <div className="card">
-                    <label>Advice <em>117</em></label>
+                    <label>Advice <em id="117">117</em></label>
                     <p className="advice-paragraph">it is easy to sit up and take notice, what's difficult is getting up and taking action.</p>
                     <img src={divider} />
                     <button 
