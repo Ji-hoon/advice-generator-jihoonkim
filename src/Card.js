@@ -8,12 +8,13 @@ class Card extends React.Component {
     constructor(props) {
         super(props);
         this.API_URL =  'https://api.adviceslip.com/advice';
+        this.idLoadingMessage = "Listening to anonymous advice...";
         this.res = {};
     }
 
     state = {
         id:null,
-        comment:"Listening to anonymous advice...",
+        comment: this.idLoadingMessage,
         isLoading: true,
     };
 
@@ -34,7 +35,7 @@ class Card extends React.Component {
 
         this.setState({
             id:null,
-            comment:"Listening to anonymous advice...",
+            comment: this.idLoadingMessage,
             isLoading: true,
         });
         
@@ -68,7 +69,7 @@ class Card extends React.Component {
                     <p 
                         loading-status={this.state.isLoading ? 'loading' : ''}
                         className="advice-paragraph">
-                            {this.state.comment}
+                            { this.state.isLoading ? this.idLoadingMessage : this.state.comment }
                     </p>
                     <img 
                         loading-status={this.state.isLoading ? 'loading' : ''} 
