@@ -4,28 +4,33 @@ import dice from './__resources/images/icon-dice.svg';
 import './Card.css';
 
 class Card extends React.Component {
-    
     // 생성자
     constructor(props) {
         super(props);
         this.API_URL =  'https://api.adviceslip.com/advice';
         this.ATTR_URL = 'https://www.frontendmentor.io?ref=challenge';
         this.GIT_REPO_URL = 'https://github.com/elice-study-first/advice-generator-jihoonkim';
-        this.res = fetch(this.API_URL)
-                .then( response => response.json())
-                .then( data => {
+        this.res = {};
+    }
+
+    state = {
+        id:null,
+        comment:"Listening to anonymous advice...",
+        isLoading: true,
+    };
+
+    // 컴포넌트가 마운트 되었을 때 실행하는 함수
+    componentDidMount() {
+        fetch(this.API_URL)
+            .then( response => response.json())
+            .then( data => {
                 this.res = data.slip;
                 setTimeout( () => {
-                    return this.generateAdvice(data.slip)
-                  }, 1000)
-            });
-        this.state = {
-            id:Number,
-            comment:"Listening to anonymous advice...",
-            isLoading: true,
-        };
+                    return this.generateAdvice(this.res);
+            }, 1500)
+        });   
     }
-    
+
     // 새로운 데이터 받아오는 함수 + 카드 내 각 요소에 대한 이벤트 처리 포함
     getFetchData(timtout) {
 
@@ -59,8 +64,8 @@ class Card extends React.Component {
         return (
             <div>
                 <div className="card">
-                    <label>{this.state.isLoading ? 'Random Advice': 'Advice'} 
-                        <em id={this.state.id}>{this.state.id}</em>
+                    <label>{this.state.isLoading ? 'Random 🎲 Advice': 'Advice'} 
+                        <em>{ this.state.id ? `#${this.state.id}` : null }</em>
                     </label>
                     <p 
                         loading-status={this.state.isLoading ? 'loading' : ''}
@@ -75,8 +80,10 @@ class Card extends React.Component {
                     <button 
                         loading-status= {this.state.isLoading ? 'loading' : ''}
                         className="dice-button"
-                        onClick={() => this.getFetchData(2.5) }>
-                            <img src={dice} />
+                        onClick={  () => {
+                            if(!this.state.isLoading) this.getFetchData(2.5)
+                        } }>
+                            <img alt="icon" src={dice} />
                     </button>
                 </div>
                 <div className="attribution">
