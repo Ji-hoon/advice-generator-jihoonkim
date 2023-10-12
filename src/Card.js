@@ -1,29 +1,43 @@
 import React from 'react';
 import divider from './__resources/images/pattern-divider-desktop.svg';
 import dice from './__resources/images/icon-dice.svg';
-import './App.css';
+import './Card.css';
 
 class Card extends React.Component {
     // 생성자
     constructor(props) {
         super(props);
         this.API_URL =  'https://api.adviceslip.com/advice';
-        this.ATTR_URL = 'https://www.frontendmentor.io?ref=challenge';
-        this.GIT_REPO_URL = 'https://github.com/elice-study-first/advice-generator-jihoonkim';
+        this.idLoadingMessage = "Listening to anonymous advice...";
         this.res = {};
     }
-    
-    getFetchData() {
-        this.diceButton = document.querySelector('button.dice-button');
-        this.idElement = document.querySelector('label em');
-        this.paragraphElement = document.querySelector('.advice-paragraph');
 
-        this.diceButton.classList.add('processing');
-        this.idElement.removeAttribute('id');
-        this.idElement.textContent = '';
-        this.paragraphElement.classList.add('processing');
-        this.paragraphElement.textContent = '';
-        this.paragraphElement.innerHTML = `<span>Listening to<br>anonymous advice...</span>`;
+    state = {
+        id:null,
+        comment: this.idLoadingMessage,
+        isLoading: true,
+    };
+
+    // 컴포넌트가 마운트 되었을 때 실행하는 함수
+    componentDidMount() {
+        fetch(this.API_URL)
+            .then( response => response.json())
+            .then( data => {
+                this.res = data.slip;
+                setTimeout( () => {
+                    return this.generateAdvice(this.res);
+            }, 1500)
+        });   
+    }
+
+    // 새로운 데이터 받아오는 함수 + 카드 내 각 요소에 대한 이벤트 처리 포함
+    getFetchData(timtout) {
+
+        this.setState({
+            id:null,
+            comment: this.idLoadingMessage,
+            isLoading: true,
+        });
         
         fetch(this.API_URL)
           .then( response => response.json())
@@ -31,38 +45,47 @@ class Card extends React.Component {
             this.res = data.slip;
             setTimeout( () => {
               return this.generateAdvice(this.res)
-            }, 2500)
+            }, timtout*1000)
           })
     }
-      
+
+    // 받아온 데이터로 카드 내 콘텐츠를 그리는 함수
     generateAdvice(res) {
-        this.diceButton.classList.remove('processing');
-        this.paragraphElement.classList.remove('processing');
-      
-        this.idElement.setAttribute('id', res.id);
-        this.idElement.textContent = res.id;
-        this.paragraphElement.innerHTML = res.advice;
+        this.setState({
+            id:res.id,
+            comment:res.advice,
+            isLoading: false,
+        });
     }
 
     render() {
+       
         return (
-            <div className="App">
+            <div>
                 <div className="card">
-                    <label>Advice <em id="117">117</em></label>
-                    <p className="advice-paragraph">it is easy to sit up and take notice, what's difficult is getting up and taking action.</p>
-                    <img src={divider} />
+                    <label>{this.state.isLoading ? 'Random 🎲 Advice': 'Advice'} 
+                        <em>{ this.state.id ? `#${this.state.id}` : null }</em>
+                    </label>
+                    <p 
+                        loading-status={this.state.isLoading ? 'loading' : ''}
+                        className="advice-paragraph">
+                            { this.state.isLoading ? this.idLoadingMessage : this.state.comment }
+                    </p>
+                    <img 
+                        loading-status={this.state.isLoading ? 'loading' : ''} 
+                        className="divider"
+                        alt='divider'
+                        src={divider} />
                     <button 
-                        className="dice-button" 
-                        onClick={() => this.getFetchData() }>
-                            <img src={dice} />
+                        loading-status= {this.state.isLoading ? 'loading' : ''}
+                        className="dice-button"
+                        onClick={  () => {
+                            if(!this.state.isLoading) this.getFetchData(2.5)
+                        } }>
+                            <img alt="icon" src={dice} />
                     </button>
                 </div>
-                <div className="attribution">
-                    Challenge by <a href={this.ATTR_URL} target="_blank">Frontend Mentor</a>. 
-                    Coded by <a href={this.GIT_REPO_URL} target="_blank">Jihoon Kim</a>.
-                </div>
             </div>
-        
         );
     }
 }

@@ -23,6 +23,13 @@
   color: white;
   padding: 40px;
   box-sizing: border-box;
+  gap: 32px;
+}
+
+.App > div:not(.attribution) {
+  flex: 1 0;
+  align-items: center;
+  display: flex;
 }
 
 .App-link {
@@ -44,7 +51,6 @@
 .attribution {
   font-size: calc(10px + 1vmin); 
   text-align: center; 
-  margin-top: 80px; 
 }
 .attribution a { 
   color: #56e09d; 
@@ -55,106 +61,3 @@
 }
 
 html {background-color: #202632;}
-
-.card {
-  background-color: #313b49;
-  width: 75vw;
-  border-radius: 8px;
-  padding: 36px 36px 72px;
-  max-width: 500px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 1px 15px 0px rgba(0,0,0,0.35);
-}
-
-label {
-  color: #56e09d;
-  text-transform: uppercase;
-  letter-spacing: 0.4em;
-  font-size: 0.6em;
-  font-weight: 700;
-}
-
-label em {
-  font-style: normal;
-
-  &[id]:before {
-    content: '#';
-  }
-}
-
-.advice-paragraph {
-  font-size:  calc(10px + 3vmin);
-  font-weight: 700;
-  margin: 1em auto 1.5em;
-  min-height: 40px;
-  transition: opacity 250ms cubic-bezier(0.15, 0.72, 0.36, 0.92);
-
-  &:not(.processing) {
-    animation: pop-up 1 750ms cubic-bezier(0.38, 0.16, 0.36, 0.92);
-  }
-  &.processing {
-    opacity: 0.3;
-  }
-  &:not(.processing):before, &:not(.processing):after {
-    content: '“';
-    font-family: 'Montagu Slab', serif;
-    letter-spacing: 4px;
-  }
-  &:not(.processing):after {
-    content:'"';
-  }
-}
-
-button.dice-button {
-  padding: 20px;
-  position: absolute;
-  bottom: -32px;
-  left: 50%;
-  margin-left: -32px;
-  appearance: none;
-  outline: 0;
-  border: 0;
-  background-color: #5dfeae;
-  border-radius: 64px;
-  display: flex;
-  cursor: pointer;
-  transition: box-shadow 300ms ease-out;
-
-  &:not(.processing):hover {
-    box-shadow: 0 0 15px 1px #51bb86;
-  }
-  &:not(.processing):active {
-    transform: translateY(2px);
-  }
-  &.processing {
-    background-color: #51bb86;
-    cursor: not-allowed;
-  }
-}
-
-button.dice-button.processing img {
-    animation: rolling-dice infinite 1s cubic-bezier(0.48, 0.19, 0.51, 0.85);
-}
-
-@keyframes rolling-dice {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes pop-up {
-  0% {
-    transform: scale(0.725);
-  }
-  45% {
-    transform: scale(1.015);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
