@@ -8,8 +8,6 @@ class Card extends React.Component {
     constructor(props) {
         super(props);
         this.API_URL =  'https://api.adviceslip.com/advice';
-        this.ATTR_URL = 'https://www.frontendmentor.io?ref=challenge';
-        this.GIT_REPO_URL = 'https://github.com/elice-study-first/advice-generator-jihoonkim';
         this.res = {};
     }
 
@@ -85,10 +83,6 @@ class Card extends React.Component {
                         } }>
                             <img alt="icon" src={dice} />
                     </button>
-                </div>
-                <div className="attribution">
-                    Challenge by <a href={this.ATTR_URL} target="_blank">Frontend Mentor</a>. 
-                    Coded by <a href={this.GIT_REPO_URL} target="_blank">Jihoon Kim</a>.
                 </div>
             </div>
         );
