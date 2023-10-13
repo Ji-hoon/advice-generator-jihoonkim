@@ -16,18 +16,37 @@ class Card extends React.Component {
         id:null,
         comment: this.idLoadingMessage,
         isLoading: true,
+        isError: false,
     };
 
     // 컴포넌트가 마운트 되었을 때 실행하는 함수
     componentDidMount() {
-        fetch(this.API_URL)
-            .then( response => response.json())
+        fetch('https://api.adviceslip.com/advic')
+            .then( response => {
+                if (!response.ok) {
+                    throw new Error('HTTP Error ' + response.status);
+                }
+                return response.json();
+            })
             .then( data => {
-                this.res = data.slip;
-                setTimeout( () => {
-                    return this.generateAdvice(this.res);
-            }, 1500)
-        });   
+                
+                if(data) {
+                    this.res = data.slip;
+                    setTimeout( () => {
+                        return this.generateAdvice(this.res);
+                    }, 1500)
+                }
+            })
+            .catch( error => {
+                console.log('Error: ', error);
+
+                this.setState({
+                    id:null,
+                    comment: "___Something went wrong!___ Please try again",
+                    isLoading: false,
+                    isError: false,
+                });
+            })   
     }
 
     // 새로운 데이터 받아오는 함수 + 카드 내 각 요소에 대한 이벤트 처리 포함
@@ -37,6 +56,7 @@ class Card extends React.Component {
             id:null,
             comment: this.idLoadingMessage,
             isLoading: true,
+            isError:false,
         });
         
         fetch(this.API_URL)
@@ -55,6 +75,7 @@ class Card extends React.Component {
             id:res.id,
             comment:res.advice,
             isLoading: false,
+            isError: false,
         });
     }
 
